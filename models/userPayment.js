@@ -10,6 +10,11 @@ const userPaymentSchema = new mongoose.Schema({
   message: {
     type: String,
     required: true
+  },
+  birthdayEventId: {
+    type: Schema.Types.ObjectId,
+    ref: 'BirthdayEvent',
+    required: true
   }
 })
 

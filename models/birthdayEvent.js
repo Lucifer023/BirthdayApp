@@ -12,6 +12,14 @@ const birthdayEventSchema = new mongoose.Schema({
   notes: {
     type: String,
     required: true
+  },
+  isBoughtPresent: {
+    type: Boolean,
+    required: false
+  },
+  eventDate: {
+    type: Date,
+    required: true
   }
 })
 
