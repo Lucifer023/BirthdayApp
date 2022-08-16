@@ -1,8 +1,8 @@
 const moment = require('moment')
 const User = require('../models/user')
 const Item = require('../models/item')
-const checkIfDuplicatesExist = require('../helper_functions/checkForDuplicatesArray')
 const isNotDate = require('../helper_functions/checkIsDate')
+const mongoose = require('mongoose')
 
 global.username = null
 
@@ -50,16 +50,16 @@ exports.creatingUser = async (req, res) => {
       return res.status(400).json({ message: 'Birth date not provided' })
     }
 
-    if(!req.body.wishlist){
-      req.body.wishlist = []
+    if(isNotDate(req.body.birthDate)){
+      return res.status(400).json({ message: 'Incorrect format of date' })
     }
 
-    if(checkIfDuplicatesExist(req.body.wishlist)){
+    if(user.wishlist.includes(req.params.itemid)){
       return res.status(400).json({ message: 'Wish list has duplicate items' })
     }
 
-    if(isNotDate(req.body.birthDate)){
-      return res.status(400).json({ message: 'Incorrect format of date' })
+    if(!req.body.wishlist){
+      req.body.wishlist = []
     }
 
     for(const id of req.body.wishlist){
@@ -121,16 +121,18 @@ exports.addItemToWishList = async (req, res) => {
 
   const wishListWithPreviousAndNew = wishListOfLoggedUser.concat(req.params.itemid)
 
-  if(checkIfDuplicatesExist(wishListWithPreviousAndNew)){
+  if(wishListOfLoggedUser.includes(req.params.itemid)){
     return res.status(400).json({ message: 'Wish list has duplicate items' })
   }
 
+  let objectIdArray = wishListWithPreviousAndNew.map(s => mongoose.Types.ObjectId(s));
+
   try {
-    loggedUser.wishlist = wishListWithPreviousAndNew
+    loggedUser.wishlist = objectIdArray
     const newUser = await loggedUser.save()
     res.status(200).json(newUser)
   } catch (err) {
-    res.status(400).json({ message: 'Something went wrong' })
+    res.status(400).json({ message: err.message })
   }
 }
 
