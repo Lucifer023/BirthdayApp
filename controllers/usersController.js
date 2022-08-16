@@ -3,7 +3,6 @@ const User = require('../models/user')
 const Item = require('../models/item')
 const checkIfDuplicatesExist = require('../helper_functions/checkForDuplicatesArray')
 const isNotDate = require('../helper_functions/checkIsDate')
-const getCurrentDate = require('../helper_functions/getCurrentDay')
 
 global.username = null
 
@@ -120,7 +119,7 @@ exports.addItemToWishList = async (req, res) => {
   
   let wishListOfLoggedUser = loggedUser.wishlist
 
-  let wishListWithPreviousAndNew = [...wishListOfLoggedUser.map(item => item.toString()), req.params.itemid]
+  const wishListWithPreviousAndNew = wishListOfLoggedUser.concat(req.params.itemid)
 
   if(checkIfDuplicatesExist(wishListWithPreviousAndNew)){
     return res.status(400).json({ message: 'Wish list has duplicate items' })
@@ -140,13 +139,16 @@ exports.usersWithUpcomingBirthdays = (req, res) => {
   if(!global.username){
     return res.status(401).json({ message: 'You need to login first' })
   }
-    const users = res.allUsers
+  const currentYear = new Date().getFullYear()
+  const currentDate = new Date()
 
-    const usersWithUpcomingBirthdays = users.filter(user => moment(user.birthDate).set(`year`, moment().year()) >= getCurrentDate() && user.name !== global.username)
+  const users = res.allUsers
 
-    let sortedUsers = usersWithUpcomingBirthdays.sort((a, b) => a.birthDate - b.birthDate)
+  const usersWithUpcomingBirthdays = users.filter(user => moment(user.birthDate).set('year', currentYear) >= currentDate && user.name !== global.username)
 
-    return res.status(200).json(sortedUsers)
+  let sortedUsers = usersWithUpcomingBirthdays.sort((a, b) => a.birthDate - b.birthDate)
+
+  return res.status(200).json(sortedUsers)
 }
 
 exports.getAllUsers = async (req, res, next) => {

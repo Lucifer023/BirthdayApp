@@ -11,11 +11,11 @@ Content-Type: application/json
 
 ###
 // Adding item to wish list of logged user
-GET http://localhost:3000/users/addItemToWishList/62f7bc0f2d8adf6f210f033a
+GET http://localhost:3000/users/addItemToWishList/62f7bb452d8adf6f210f0338
 
 ###
 // Login
-POST http://localhost:3000/users/login?name=Milica
+POST http://localhost:3000/users/login?name=Mirela
 
 ###
 // Logout
@@ -37,6 +37,6 @@ Content-Type: application/json
 
 ###
 // Deleting one item
-DELETE http://localhost:3000/items/62fb52dcb7feedba26172fcc
+DELETE http://localhost:3000/items/62fb5ae11c2ea3810140a696
 
 
