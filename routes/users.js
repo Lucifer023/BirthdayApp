@@ -1,9 +1,10 @@
 const express = require('express')
 const router = express.Router()
 const usersController = require('../controllers/usersController')
+const itemsController = require('../controllers/itemsController')
 
 // Creating one
-router.post('/', usersController.getAllUsers, usersController.creatingUser)
+router.post('/', usersController.getAllUsers,  itemsController.getAllItems, usersController.creatingUser)
 
 // Login
 router.post('/login', usersController.getAllUsers, usersController.login)

@@ -36,10 +36,13 @@ exports.logout = async (req, res) => {
 
 // Creating one
 exports.creatingUser = async (req, res) => {
+  let items
+  let itemsListOfIds = []
+  let userWishList = []
   const user = new User({
     name: req.body.name,
     birthDate: req.body.birthDate,
-    wishlist: req.body.wishlist
+    wishlist: req.body.wishlist ? req.body.wishlist : []
   })
 
     if(!req.body.name){
@@ -54,29 +57,36 @@ exports.creatingUser = async (req, res) => {
       return res.status(400).json({ message: 'Incorrect format of date' })
     }
 
-    if(user.wishlist.includes(req.params.itemid)){
-      return res.status(400).json({ message: 'Wish list has duplicate items' })
-    }
-
-    if(!req.body.wishlist){
-      req.body.wishlist = []
-    }
-
-    for(const id of req.body.wishlist){
-      try {
-        const item = await Item.findById(id)
-
-        if(!item){
-          return res.status(400).json({ message: 'Invalid item ID' })
-        }
-      } catch (err) {
-        return res.status(400).json({ message: 'Invalid item ID format' })
-      }
-    }
-    
     for(const oneUser of res.allUsers){
       if(oneUser.name === req.body.name){
         return res.status(400).json({ message: 'User already exists' })
+      }
+    }
+
+    try{
+      items = await Item.find()
+    } catch (err) {
+      return res.status(500).json({ message: 'Something went wrong' })
+    }
+
+    items.map(item => {
+      itemsListOfIds.push(item._id.toString())
+    })
+
+    user.wishlist.map(wish => {
+      userWishList.push(wish.toString())
+    })
+
+    let hasDuplicate = userWishList.some((val, i) => userWishList.indexOf(val) !== i);
+
+    if(hasDuplicate){
+      return res.status(400).json({ message: 'Wish list has duplicates items' })
+    }
+
+    for(let i = 0; i < userWishList.length; i++){
+      let isNotIncluded = !itemsListOfIds.includes(userWishList[i])
+      if(isNotIncluded){
+        return res.status(400).json({ message: 'Item that you want to add to your wish list does not exist' })
       }
     }
 
@@ -84,7 +94,7 @@ exports.creatingUser = async (req, res) => {
       const newUser = await user.save()
       res.status(201).json(newUser)
     } catch (err) {
-      res.status(400).json({ message: err.message })
+      res.status(400).json({ message: 'Item id format is not correct' })
     }
   }
 
@@ -102,13 +112,12 @@ exports.addItemToWishList = async (req, res) => {
   }
 
   try {
-    item = await Item.findById(req.params.itemid)
+    item = await Item.findOne({ _id: req.params.itemid })
+    if(item === null){
+      return res.status(400).json({ message: 'Item not found' })
+    }
   } catch(err) {
     return res.status(400).json({ message: 'You provided wrong format of item id' })
-  }
-
-  if(!item){
-    return res.status(400).json({ message: 'Item not found' })
   }
 
   try {

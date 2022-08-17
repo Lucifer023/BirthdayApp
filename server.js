@@ -13,9 +13,12 @@ app.use(express.json())
 
 const usersRouter = require('./routes/users')
 const itemsRouter = require('./routes/items')
+const birthdayEventsRouter = require('./routes/birthdayEvents')
+const presentsRouter = require('./routes/presents')
 app.use('/users', usersRouter)
 app.use('/items', itemsRouter)
-
+app.use('/birtdayEvents', birthdayEventsRouter)
+app.use('/presents', presentsRouter)
 
 app.listen(3000, () => {
     console.log('Server Started')

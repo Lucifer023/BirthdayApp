@@ -42,6 +42,7 @@ exports.getItem = async (req, res, next) => {
   let item
   try {
     item = await Item.findById(req.params.id)
+    console.log(item)
     if (item == null) {
       return res.status(404).json({ message: 'Cannot find item' })
     }
