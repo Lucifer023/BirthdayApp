@@ -12,7 +12,7 @@ exports.login = async (req, res) => {
     return res.status(400).json({ message: 'You need to provide your name' })
   }
 
-  if(global.username !== null){
+  if(global.username === req.query.name){
     return res.status(400).json({ message: 'You are already logged in' })
   }
 
@@ -107,7 +107,7 @@ exports.addItemToWishList = async (req, res) => {
     return res.status(401).json({ message: 'You need to login first' })
   }
 
-  if(!req.params.itemid){
+  if(req.params.itemid === undefined){
     return res.status(400).json({ message: 'You need to choose which item you want to add to your wish list' })
   }
 
@@ -123,7 +123,7 @@ exports.addItemToWishList = async (req, res) => {
   try {
     loggedUser = await User.findOne({ name: global.username })
   } catch(err) {
-    return res.status(400).json({ message: 'There is no user with that username' })
+    return res.status(500).json({ message: 'Something went wrong' })
   }
   
   let wishListOfLoggedUser = loggedUser.wishlist
@@ -141,7 +141,7 @@ exports.addItemToWishList = async (req, res) => {
     const newUser = await loggedUser.save()
     res.status(200).json(newUser)
   } catch (err) {
-    res.status(400).json({ message: err.message })
+    res.status(500).json({ message: 'Something went wrong' })
   }
 }
 

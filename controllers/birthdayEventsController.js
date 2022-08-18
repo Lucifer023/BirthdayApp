@@ -24,15 +24,18 @@ exports.createBirthdayEvent = async (req, res) => {
 
     try {
         birthdayPerson = await User.findOne({ _id: req.body.birthdayPerson })
+        if(birthdayPerson === null){
+          return res.status(400).json({ message: 'There is no user with that user id' })
+        }
       } catch(err) {
-        return res.status(400).json({ message: 'There is no user with that username' })
-      }
+        return res.status(500).json({ message: 'Something went wrong' })
+    }
 
     try {
         birthdayEventOne = await BirthdayEvent.findOne({ birthdayPerson: req.body.birthdayPerson })
       } catch(err) {
-        return res.status(400).json({ message: 'Birthday event does not exist' })
-      }
+        return res.status(500).json({ message: 'Something went wrong' })
+    }
 
     if(birthdayEventOne !== null){
         if(birthdayPerson._id.toString() === req.body.birthdayPerson){
@@ -42,11 +45,11 @@ exports.createBirthdayEvent = async (req, res) => {
         }
     }
 
-      try {
-        eventCreator = await User.findOne({ name: global.username })
-      } catch(err) {
-        return res.status(400).json({ message: 'There is no user with that usernamee' })
-      }
+    try {
+      eventCreator = await User.findOne({ name: global.username })
+    } catch(err) {
+      return res.status(500).json({ message: 'Something went wrong' })
+    }
 
     if(birthdayPerson.name === global.username){
         return res.status(400).json({ message: 'You cannot create birthday event for yourself'})
@@ -56,9 +59,7 @@ exports.createBirthdayEvent = async (req, res) => {
         return res.status(400).json({ message: 'You must enter how much money is needed for that birthday event'})
     }
 
-    const birthdayPersonWithCurrentYear = moment(birthdayPerson.birthDate).set('year', currentYear)
-
-    
+    const birthdayPersonWithCurrentYear = moment(birthdayPerson.birthDate).set('year', currentYear)    
 
     if(birthdayPersonWithCurrentYear <= currentDate){
         return res.status(400).json({ message: 'You cannot create a birthday event for a date that has passed' })
@@ -78,7 +79,7 @@ exports.createBirthdayEvent = async (req, res) => {
         const newBirthdayEvent = await birthdayEvent.save()
         res.status(201).json(newBirthdayEvent)
     } catch(err) {
-        res.status(400).json({ message: err.message })
+        res.status(500).json({ message: 'Something went wrong' })
     }
 }
 
@@ -90,13 +91,13 @@ exports.addParticipantToBirthdayEvent = async (req, res) => {
 
     if(!global.username){
         return res.status(401).json({ message: 'You need to login first' })
-      }
+    }
 
     try {
         loggedUser = await User.findOne({ name: global.username })
-      } catch(err) {
-        return res.status(400).json({ message: 'There is no user with that usernamee' })
-      }
+    } catch(err) {
+        return res.status(500).json({ message: 'Something went wrong' })
+    }
 
     const userPayment = new UserPayment({
         userId: loggedUser._id.toString(),
@@ -105,9 +106,8 @@ exports.addParticipantToBirthdayEvent = async (req, res) => {
         birthdayEventId: req.body.birthdayEventId
     })
 
-
-    if(!userPayment.userId){
-        return res.status(400).json({ message: 'User not provided' })
+    if(!userPayment.birthdayEventId){
+      return res.status(400).json({ message: 'Birthday event id not provided' })
     }
 
     if(!req.body.amount){
@@ -118,10 +118,6 @@ exports.addParticipantToBirthdayEvent = async (req, res) => {
         return res.status(400).json({ message: 'Message not provided' })
     }
 
-    if(!userPayment.birthdayEventId){
-        return res.status(400).json({ message: 'Birthday event id not provided' })
-    }
-
     const filter = { _id: userPayment.birthdayEventId }
 
     try {
@@ -129,10 +125,14 @@ exports.addParticipantToBirthdayEvent = async (req, res) => {
 
         if(birthdayEventObject == null) {
             return res.status(404).json({ message: 'Cannot find birthday event' })
-          }
+        }
 
         if(birthdayEventObject.participants.includes(userPayment.userId)){
             return res.status(400).json({ message: 'You cannot be participant more than one time' })
+        }
+
+        if(birthdayEventObject.birthdayPerson.toString() === loggedUser._id.toString()){
+          return res.status(400).json({ message: 'You cannot be participant in your birthday event' })
         }
 
         const allParticipants = birthdayEventObject.participants.concat(loggedUser._id)
@@ -148,22 +148,31 @@ exports.addParticipantToBirthdayEvent = async (req, res) => {
         const newUserPayment = await userPayment.save()
         res.status(200).json({ "birthdayEvent": birthdayEventObjectUpdated, "userPayment": newUserPayment })
     } catch(err) {
-        res.status(400).json({ message: err.message })
+        res.status(500).json({ message: 'Something went wrong' })
     }
 }
 
 exports.getAllBirthdays = async (req, res) => {
-    if(!global.username){
-        return res.status(401).json({ message: 'You need to login first' })
-      }
-    
-      const birthdayEvents = res.allBirthdayEvents
-    
-      const allBirthdays = birthdayEvents.filter(birthdayEvent => birthdayEvent.eventCreator !== global.usernam)
-    
-      let sortedUsers = allBirthdays.sort((a, b) => a.eventDate - b.eventDate)
-    
-      return res.status(200).json(sortedUsers)
+
+  let loggedUser
+  
+  if(!global.username){
+    return res.status(401).json({ message: 'You need to login first' })
+  }
+
+  const birthdayEvents = res.allBirthdayEvents
+
+  try{
+    loggedUser = await User.findOne({ name: global.username })
+  } catch (err){
+    return res.status(500).json({ message: 'Something went wrong' })
+  }
+
+  const allBirthdays = birthdayEvents.filter(birthdayEvent => birthdayEvent.birthdayPerson.toString() !== loggedUser._id.toString())
+
+  let sortedUsers = allBirthdays.sort((a, b) => a.eventDate - b.eventDate)
+
+  return res.status(200).json(sortedUsers)
 }
 
 exports.getAllOpenBirthdays = async (req, res) => {
@@ -174,8 +183,14 @@ exports.getAllOpenBirthdays = async (req, res) => {
       const currentDate = new Date()
     
       const birthdayEvents = res.allBirthdayEvents
+
+      try{
+        loggedUser = await User.findOne({ name: global.username })
+      } catch (err){
+        return res.status(500).json({ message: 'Something went wrong' })
+      }
     
-      const allOpenBirthdays = birthdayEvents.filter(birthdayEvent => {return moment(birthdayEvent.eventDate) > currentDate && birthdayEvent.eventCreator !== global.usernam}
+      const allOpenBirthdays = birthdayEvents.filter(birthdayEvent => {return moment(birthdayEvent.eventDate) > currentDate && birthdayEvent.birthdayPerson.toString() !== loggedUser._id.toString()}
       )
     
       let sortedUsers = allOpenBirthdays.sort((a, b) => a.eventDate - b.eventDate)

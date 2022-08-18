@@ -16,6 +16,6 @@ router.post('/logout', usersController.logout)
 router.get('/upcomingBirthdays',  usersController.getAllUsers, usersController.usersWithUpcomingBirthdays)
 
 // Adding item to wish list
-router.get('/addItemToWishList/:itemid', usersController.addItemToWishList)
+router.get('/addItemToWishList/:itemid?', usersController.addItemToWishList)
 
 module.exports = router
