@@ -7,8 +7,6 @@ exports.createItem = async (req, res) => {
 
   let allItemsNames = res.allItems
 
-  console.log(allItemsNames)
-
   if(!global.username){
     return res.status(401).json({ message: 'You need to login first' })
   }
