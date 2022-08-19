@@ -190,7 +190,7 @@ exports.getAllOpenBirthdays = async (req, res) => {
         return res.status(500).json({ message: 'Something went wrong' })
       }
     
-      const allOpenBirthdays = birthdayEvents.filter(birthdayEvent => {return moment(birthdayEvent.eventDate) > currentDate && birthdayEvent.birthdayPerson.toString() !== loggedUser._id.toString()}
+      const allOpenBirthdays = birthdayEvents.filter(birthdayEvent => {return moment(birthdayEvent.eventDate) > currentDate && birthdayEvent.birthdayPerson.toString() !== loggedUser._id.toString() && birthdayEvent.isBoughtPresent !== true}
       )
     
       let sortedUsers = allOpenBirthdays.sort((a, b) => a.eventDate - b.eventDate)

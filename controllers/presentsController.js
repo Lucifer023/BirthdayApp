@@ -33,7 +33,7 @@ exports.createPresent = async (req, res) => {
         birthdayEventObject = await BirthdayEvent.findById(present.birthdayEventId.toString())
 
         if(birthdayEventObject === null){
-            return res.status(400).json({ message: 'Birthdat event does not exist' })
+            return res.status(400).json({ message: 'Birthday event does not exist' })
         }
     } catch (err) {
         return res.status(500).json({ message: 'Something went wrong' })
@@ -48,7 +48,7 @@ exports.createPresent = async (req, res) => {
     try {
         personWhoHaveBirthday = await Users.findById(birthdayEventObject.birthdayPerson.toString())
     } catch (err) {
-        return res.status(500).json({ message: err.message })
+        return res.status(500).json({ message: 'Something went wrong' })
     }
 
     try {
@@ -77,7 +77,7 @@ exports.createPresent = async (req, res) => {
 
     try {
         const newPresent = await present.save()
-        res.status(200).json({ "newPresent": newPresent, "birthdayEvent": updatedBirthdayEventObj })
+        res.status(200).json({ "present": newPresent, "birthdayEvent": updatedBirthdayEventObj })
     } catch(err) {
         res.status(400).json({ message: err.message })
     }
