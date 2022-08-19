@@ -39,8 +39,26 @@ exports.createPresent = async (req, res) => {
         return res.status(500).json({ message: 'Something went wrong' })
     }
 
+    if(birthdayEventObject.totalMoneyAmount !== birthdayEventObject.totalCollectedAmount){
+        return res.status(400).json({ message: 'You cannot buy a present before the money for the present has been collected' })
+      }
+
     try {
         items = await Items.find()
+    } catch (err) {
+        return res.status(500).json({ message: 'Something went wrong' })
+    }
+
+    try {
+        presentItemForBuying = await Items.findById(present.presentBought)
+
+        if(presentItemForBuying === null){
+            return res.status(400).json({ message: 'Item that you provided as a present does not exist' })
+        }
+
+        if(birthdayEventObject.totalCollectedAmount < presentItemForBuying.price){
+            return res.status(400).json({ message: "You don't have enough money to buy this present" })
+        }
     } catch (err) {
         return res.status(500).json({ message: 'Something went wrong' })
     }
@@ -63,10 +81,6 @@ exports.createPresent = async (req, res) => {
 
     if(birthdayEventObject.isBoughtPresent === true){
         return res.status(400).json({ message: 'Present already bought for this birthday event' })
-    }
-
-    if(items.toString().includes(present.presentBought) === false){
-        return res.status(400).json({ message: 'Item that you provided as a present does not exist' })
     }
 
     try {

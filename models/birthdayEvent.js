@@ -9,6 +9,10 @@ const birthdayEventSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
+  totalCollectedAmount: {
+    type: Number,
+    required: false
+  },
   notes: {
     type: String,
     required: false

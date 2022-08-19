@@ -7,6 +7,10 @@ const itemSchema = new mongoose.Schema({
     unique: true,
     dropDups: true
   },
+  price: {
+    type: Number,
+    require: true
+  },
   urlLink: {
     type: String,
     required: false,

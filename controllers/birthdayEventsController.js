@@ -72,7 +72,8 @@ exports.createBirthdayEvent = async (req, res) => {
         notes: '',
         participants: [],
         isBoughtPresent: false,
-        eventDate: moment(birthdayPerson.birthDate).set('year', currentYear)
+        eventDate: moment(birthdayPerson.birthDate).set('year', currentYear),
+        totalCollectedAmount: 0
     })
 
     try {
@@ -137,7 +138,9 @@ exports.addParticipantToBirthdayEvent = async (req, res) => {
 
         const allParticipants = birthdayEventObject.participants.concat(loggedUser._id)
 
-        const update = { participants:  allParticipants}
+        const update = { participants:  allParticipants, totalCollectedAmount: birthdayEventObject.totalCollectedAmount + req.body.amount}
+
+        
 
         birthdayEventObjectUpdated = await BirthdayEvent.findOneAndUpdate(filter, update, {new: true})
     } catch (err) {
