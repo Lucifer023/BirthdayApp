@@ -157,7 +157,7 @@ exports.usersWithUpcomingBirthdays = (req, res) => {
 
   const usersWithUpcomingBirthdays = users.filter(user => moment(user.birthDate).set('year', currentYear) >= currentDate && user.name !== global.username)
 
-  let sortedUsers = usersWithUpcomingBirthdays.sort((a, b) => a.birthDate - b.birthDate)
+  let sortedUsers = usersWithUpcomingBirthdays.sort((a, b) => moment(a.birthDate).set('year', currentYear) - moment(b.birthDate).set('year', currentYear))
 
   return res.status(200).json(sortedUsers)
 }
