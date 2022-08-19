@@ -167,7 +167,7 @@ exports.getAllUsers = async (req, res, next) => {
     try {
       allUsers = await User.find()
     } catch (err) {
-      return res.status(500).json({ message: err.message })
+      return res.status(500).json({ message: 'Something went wrong' })
     }
     
     res.allUsers = allUsers

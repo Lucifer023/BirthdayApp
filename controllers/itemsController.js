@@ -1,4 +1,5 @@
 const Item = require('../models/item')
+const User = require('../models/user')
 
 global.username = null
 
@@ -39,11 +40,21 @@ exports.deleteItem = async (req, res) => {
     return res.status(401).json({ message: 'You need to login first' })
   }
 
+  for(let oneUser of res.allUsers){
+    for(let wish of oneUser.wishlist){
+      if(wish.toString() === req.params.id){
+        let response = await oneUser.updateOne(
+          { "$pull": { "wishlist": wish } }
+          )
+      }
+    }
+  }
+
   try {
     let deletedItem = await res.item.remove()
     res.status(200).json({ "DeletedItem": deletedItem })
   } catch (err) {
-    res.status(500).json({ message: 'Something went wrong' })
+    res.status(500).json({ message: err.message })
   }
 }
 
