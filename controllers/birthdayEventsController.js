@@ -143,7 +143,7 @@ exports.addParticipantToBirthdayEvent = async (req, res) => {
 
         currentMoneyCollected = birthdayEventObject.totalMoneyAmount - birthdayEventObject.totalCollectedAmount
 
-        if(birthdayEventObject.totalMoneyAmount === update.totalCollectedAmount){
+        if(birthdayEventObject.totalMoneyAmount === birthdayEventObject.totalCollectedAmount){
           return res.status(400).json({ message: 'Money needed for present was collected' })
         }
 
