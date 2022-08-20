@@ -89,6 +89,7 @@ exports.addParticipantToBirthdayEvent = async (req, res) => {
     let loggedUser
     let birthdayEventObject
     let birthdayEventObjectUpdated
+    let currentMoneyCollected
 
     if(!global.username){
         return res.status(401).json({ message: 'You need to login first' })
@@ -140,7 +141,15 @@ exports.addParticipantToBirthdayEvent = async (req, res) => {
 
         const update = { participants:  allParticipants, totalCollectedAmount: birthdayEventObject.totalCollectedAmount + req.body.amount}
 
-        
+        currentMoneyCollected = birthdayEventObject.totalMoneyAmount - birthdayEventObject.totalCollectedAmount
+
+        if(birthdayEventObject.totalMoneyAmount === update.totalCollectedAmount){
+          return res.status(400).json({ message: 'Money needed for present was collected' })
+        }
+
+        if(update.totalCollectedAmount > birthdayEventObject.totalMoneyAmount){
+          return res.status(400).json(`You cannot give that amount of money. You can give ${currentMoneyCollected} or less than that`)
+        }
 
         birthdayEventObjectUpdated = await BirthdayEvent.findOneAndUpdate(filter, update, {new: true})
     } catch (err) {
