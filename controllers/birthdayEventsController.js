@@ -104,7 +104,7 @@ exports.addParticipantToBirthdayEvent = async (req, res) => {
     const userPayment = new UserPayment({
         userId: loggedUser._id.toString(),
         amount: req.body.amount,
-        message: req.body.message,
+        message: req.body.message ? req.body.message : '',
         birthdayEventId: req.body.birthdayEventId
     })
 
@@ -114,10 +114,6 @@ exports.addParticipantToBirthdayEvent = async (req, res) => {
 
     if(!req.body.amount){
         return res.status(400).json({ message: 'Amount not provided' })
-    }
-
-    if(!req.body.message){
-        return res.status(400).json({ message: 'Message not provided' })
     }
 
     const filter = { _id: userPayment.birthdayEventId }

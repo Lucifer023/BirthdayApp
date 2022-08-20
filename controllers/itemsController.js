@@ -1,5 +1,4 @@
 const Item = require('../models/item')
-const User = require('../models/user')
 
 global.username = null
 
@@ -16,22 +15,27 @@ exports.createItem = async (req, res) => {
     return res.status(400).json({ message: 'Name of item not provided' })
   }
 
+  if(!req.body.price){
+    return res.status(400).json({ message: 'You need to provide price' })
+  }
+
   if(allItemsNames.includes(req.body.name)){
     return res.status(400).json({ message: 'Item with that name already exist' })
   }
 
   const item = new Item({
     name: req.body.name,
+    price: req.body.price,
     urlLink: req.body.urlLink
   })
 
-    try {
-      const newItem = await item.save()
-      res.status(201).json(newItem)
-    } catch (err) {
-      res.status(500).json({ message: 'Something went wrong' })
-    }
+  try {
+    const newItem = await item.save()
+    res.status(201).json(newItem)
+  } catch (err) {
+    res.status(500).json({ message: 'Something went wrong' })
   }
+}
 
 // Deleting One
 exports.deleteItem = async (req, res) => {

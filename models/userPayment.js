@@ -9,7 +9,7 @@ const userPaymentSchema = new mongoose.Schema({
   },
   message: {
     type: String,
-    required: true
+    required: false
   },
   birthdayEventId: {
     type: Schema.Types.ObjectId,
