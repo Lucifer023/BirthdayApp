@@ -6,6 +6,9 @@ const itemsController = require('../controllers/itemsController')
 // Creating one
 router.post('/', usersController.getAllUsers,  itemsController.getAllItems, usersController.creatingUser)
 
+// Get all users
+router.get('/allUsers', usersController.getAllUsersFromDB)
+
 // Login
 router.post('/login', usersController.getAllUsers, usersController.login)
 

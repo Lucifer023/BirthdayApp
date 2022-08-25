@@ -8,14 +8,6 @@ import { optionsErrorToast } from "../../helper/toastOptions";
 import { toast } from "react-toastify";
 import axios from "axios";
 
-// U OKVIRU JEDNE TABELE PRIKAZATI ALL I OPEN BIRTHDAY EVENT-E TAKO STO NA OSNOVU JEDNOG SWITCH BUTTON-A MENJATI SA ALL NA OPEN I SA OPEN NA ALL
-// DODATI FORMU ZA DODAVANJE BIRTHDAY EVENT-A
-// DODATI FORMU ZA DODAVANJE PRESENT-A ZA NEKI BIRTHDAY EVENT (TO BI MOGLO NPR DA U OKVIRU TABELE OPEN BIRTHDAY EVENT BUDE JEDNA KOLONA KAO BTN ZA DODAVANJE ZA KUPOVINU PRESENT-A)
-// TAKODJE U OKVIRU TE TABELE ZA PRIKAZ SVIH OPEN BIRTHDAY EVENT-A JEDNO DUGME ZA DODAVANJE ULOGOVANOG USER-A KAO PARTICIPANT-A
-// KADA SE KORISNIK ULOGUJE DA MU ODE NA STRANICU HOME KOJA BI IMALA U SEBI NAVBAR I POCETNU STRANICU KOJA BI BILA PRIKAZ LISTE SA SVIM RODJENDANIMA
-// KAD SE SVE TO GORE URADI ONDA MOZE DA SE REDOM SVE FUNCKIONALNOSTI SA BACKEND-A PRIKAZUJU NA FRONTEND
-// ANTD CHILDREN WILL BE REMOVED U KONZOLI PISE PA VIDETI TO KAKO DA SE RESI
-
 const Navbar = () => {
   const [login, setLogin] = useContext(Context);
 
@@ -34,9 +26,19 @@ const Navbar = () => {
   return (
     <Menu mode="horizontal">
       <Menu.SubMenu key="birthdaySubmenu" title="Birthday - Submenu">
+        <Menu.Item key="/createBirthdayEvent">
+          <span>Create birthday event</span>
+          <Link to="/createBirthdayEvent" />
+        </Menu.Item>
+
         <Menu.Item key="/upcomingBirthdays">
           <span>Upcoming birthdays</span>
           <Link to="/upcomingBirthdays" />
+        </Menu.Item>
+
+        <Menu.Item key="/allAndOpenBirthdayEvents">
+          <span>All and open birthday events</span>
+          <Link to="/allAndOpenBirthdayEvents" />
         </Menu.Item>
       </Menu.SubMenu>
 
@@ -49,6 +51,11 @@ const Navbar = () => {
         <Menu.Item key="/addItem">
           <span>Add item</span>
           <Link to="/addItem" />
+        </Menu.Item>
+
+        <Menu.Item key="/myWishList">
+          <span>My wish list</span>
+          <Link to="/myWishList" />
         </Menu.Item>
       </Menu.SubMenu>
 

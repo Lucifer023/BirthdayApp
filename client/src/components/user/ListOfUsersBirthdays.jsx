@@ -32,8 +32,9 @@ function ListOfUsersBirthdays() {
       .get(`${serviceConfig.baseURL}/items/getAllItems`)
       .then((res) => {
         setAllItems(res.data);
-      }).catch((err) => {
-        toast.error(err.response.data.message, optionsErrorToast)
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message, optionsErrorToast);
       });
   };
 
@@ -56,15 +57,15 @@ function ListOfUsersBirthdays() {
       dataIndex: "wishlist",
       key: "wishlist",
       render: (wishlist, index) => {
-        let itemNames = []
+        let itemNames = [];
         allItems.map((item) => {
           for (let i = 0; i < wishlist.length; i++) {
             if (item._id === wishlist[i]) {
-              itemNames.push(item.name)
+              itemNames.push(item.name);
             }
           }
         });
-        return <p key={index._id}>{itemNames.join(', ')}</p>;
+        return <p key={index._id}>{itemNames.join(", ")}</p>;
       },
     },
   ];

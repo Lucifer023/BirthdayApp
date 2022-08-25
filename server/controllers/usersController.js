@@ -172,6 +172,16 @@ exports.getUserByName = async (req, res) => {
   return res.status(200).json(user)
 }
 
+exports.getAllUsersFromDB = async (req, res) => {
+  let allUsers
+  try {
+    allUsers = await User.find()
+  } catch (err) {
+    return res.status(500).json({ message: 'Something went wrong' })
+  }
+  return res.status(200).json(allUsers)
+}
+
 exports.getAllUsers = async (req, res, next) => {
     let allUsers
     try {
