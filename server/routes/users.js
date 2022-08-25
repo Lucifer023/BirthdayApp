@@ -15,6 +15,9 @@ router.post('/logout', usersController.logout)
 // Users with upcoming birthdays
 router.get('/upcomingBirthdays',  usersController.getAllUsers, usersController.usersWithUpcomingBirthdays)
 
+// Getting user by user name
+router.get('/:name', usersController.getUserByName)
+
 // Adding item to wish list
 router.get('/addItemToWishList/:itemid?', usersController.addItemToWishList)
 

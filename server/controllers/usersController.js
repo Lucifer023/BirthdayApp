@@ -21,7 +21,7 @@ exports.login = async (req, res) => {
       global.username = req.query.name
       return res.status(200).json({ message: 'You successfully logged in' })
   }}
-  
+    
   return res.status(404).json({ message: 'User does not exist' })
 }
 
@@ -160,6 +160,16 @@ exports.usersWithUpcomingBirthdays = (req, res) => {
   let sortedUsers = usersWithUpcomingBirthdays.sort((a, b) => moment(a.birthDate).set('year', currentYear) - moment(b.birthDate).set('year', currentYear))
 
   return res.status(200).json(sortedUsers)
+}
+
+exports.getUserByName = async (req, res) => {
+  let user
+  try {
+    user = await User.findOne({ name: req.params.name })
+  } catch (err) {
+    return res.status(500).json({ message: 'Something went wrong' })
+  }
+  return res.status(200).json(user)
 }
 
 exports.getAllUsers = async (req, res, next) => {

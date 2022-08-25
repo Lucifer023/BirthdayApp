@@ -13,7 +13,7 @@ const itemSchema = new mongoose.Schema({
   },
   urlLink: {
     type: String,
-    required: false,
+    required: true,
   }
 })
 

@@ -2,6 +2,17 @@ const Item = require('../models/item')
 
 global.username = null
 
+// Getting all items
+exports.getAllItemsFromDB = async (req, res) => {
+  let allItems
+  try {
+    allItems = await Item.find()
+  } catch (err) {
+    return res.status(500).json({ message: 'Something went wrong' })
+  }
+  return res.status(200).json(allItems)
+}
+
 // Creating one
 exports.createItem = async (req, res) => {
 
@@ -17,6 +28,10 @@ exports.createItem = async (req, res) => {
 
   if(!req.body.price){
     return res.status(400).json({ message: 'You need to provide price' })
+  }
+
+  if(!req.body.urlLink){
+    return res.status(400).json({ message: 'You need to provide image url' })
   }
 
   if(allItemsNames.includes(req.body.name)){
@@ -56,13 +71,13 @@ exports.deleteItem = async (req, res) => {
 
   try {
     let deletedItem = await res.item.remove()
-    res.status(200).json({ "DeletedItem": deletedItem })
+    res.status(200).json({message: 'Successfully deleted item'})
   } catch (err) {
     res.status(500).json({ message: err.message })
   }
 }
 
-// Get one item
+// Get one item middleware
 exports.getItem = async (req, res, next) => {
   let item
   try {
@@ -78,7 +93,7 @@ exports.getItem = async (req, res, next) => {
   next()
 }
 
-// Get all items
+// Get all items middleware
 exports.getAllItems = async (req, res, next) => {
   let allItems
   try {

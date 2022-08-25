@@ -1,6 +1,7 @@
 require('dotenv').config()
 
 const express = require('express')
+const cors = require('cors');
 const app = express()
 const mongoose = require('mongoose')
 
@@ -10,6 +11,9 @@ db.on('error', (err) => res.status(500).json({ message: "Something went wrong" }
 db.once('open', () => console.log('Connected to Database'))
 
 app.use(express.json())
+app.use(cors({
+    origin: '*'
+}));
 
 const usersRouter = require('./routes/users')
 const itemsRouter = require('./routes/items')
@@ -20,6 +24,6 @@ app.use('/items', itemsRouter)
 app.use('/birthdayEvents', birthdayEventsRouter)
 app.use('/presents', presentsRouter)
 
-app.listen(3000, () => {
+app.listen(5000, () => {
     console.log('Server Started')
 })
