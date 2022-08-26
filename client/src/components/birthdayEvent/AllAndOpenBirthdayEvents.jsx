@@ -131,7 +131,19 @@ const AllAndOpenBirthdayEvents = () => {
       render: (data) => {
         return (
           <Button type="primary">
-            <Link state={data._id} to={{ pathname: `/addParticipantToBirthdayEvent/${data._id}` }}  >Add</Link>
+            <Link state={data._id} to={{ pathname: `/addParticipantToBirthdayEvent/${data._id}` }} >Add</Link>
+          </Button>
+        );
+      },
+    },
+    {
+      title: "Buy present",
+      dataIndex: "",
+      key: "x",
+      render: (data) => {
+        return (
+          <Button type="primary">
+            <Link state={data._id} to={{ pathname: `/buyPresent/${data._id}` }} >Add</Link>
           </Button>
         );
       },

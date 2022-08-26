@@ -78,81 +78,84 @@ const CreateBirthdayEvent = () => {
   };
 
   return (
-    <div className="main-container">
-      <Form
-        onSubmitCapture={handleSubmit}
-        className="form-container-item"
-        initialValues={{
-          remember: true,
-        }}
-      >
-        <Form.Item
-          name="birthdayPerson"
-          rules={[
-            {
-              required: true,
-              message: "Please select birthday person!",
-            },
-          ]}
+    <>
+      <h1 style={{ display: "flex", justifyContent: "center" }}>Create birthday event</h1>
+      <div className="main-container">
+        <Form
+          onSubmitCapture={handleSubmit}
+          className="form-container-item"
+          initialValues={{
+            remember: true,
+          }}
         >
-          <Select
-            allowClear
-            placeholder="Select person which you want to create birthday event"
-            onChange={(value) =>
-              setBirthdayEvent({ ...birthdayEvent, birthdayPerson: value })
-            }
-            style={{
-              width: "100%",
-            }}
+          <Form.Item
+            name="birthdayPerson"
+            rules={[
+              {
+                required: true,
+                message: "Please select birthday person!",
+              },
+            ]}
           >
-            {allUsers.map((user) => {
-              return (
-                <Select.Option key={user._id} value={user._id}>
-                  {user.name}
-                </Select.Option>
-              );
-            })}
-          </Select>
-        </Form.Item>
+            <Select
+              allowClear
+              placeholder="Select person which you want to create birthday event"
+              onChange={(value) =>
+                setBirthdayEvent({ ...birthdayEvent, birthdayPerson: value })
+              }
+              style={{
+                width: "100%",
+              }}
+            >
+              {allUsers.map((user) => {
+                return (
+                  <Select.Option key={user._id} value={user._id}>
+                    {user.name}
+                  </Select.Option>
+                );
+              })}
+            </Select>
+          </Form.Item>
 
-        <Form.Item
-          name="totalMoneyAmount"
-          rules={[
-            {
-              required: true,
-              message: "Please input total money amount!",
-            },
-          ]}
-        >
-          <InputNumber
-            placeholder="Total money amount"
-            style={{ width: "180px" }}
-            onChange={(value) =>
-              setBirthdayEvent({ ...birthdayEvent, totalMoneyAmount: value })
-            }
-          />
-        </Form.Item>
-
-        <Form.Item name="notes">
-          <Input
-            placeholder="Note for birthday event"
-            onChange={(e) =>
-              setBirthdayEvent({ ...birthdayEvent, notes: e.target.value })
-            }
-          />
-        </Form.Item>
-
-        <Form.Item>
-          <Button
-            type="primary"
-            htmlType="submit"
-            className="login-form-button"
+          <Form.Item
+            name="totalMoneyAmount"
+            rules={[
+              {
+                required: true,
+                message: "Please input total money amount!",
+              },
+            ]}
           >
-            Create birthday event
-          </Button>
-        </Form.Item>
-      </Form>
-    </div>
+            <InputNumber
+              placeholder="Total money amount"
+              style={{ width: "180px" }}
+              onChange={(value) =>
+                setBirthdayEvent({ ...birthdayEvent, totalMoneyAmount: value })
+              }
+            />
+          </Form.Item>
+
+          <Form.Item name="notes">
+            <Input
+              placeholder="Note for birthday event"
+              onChange={(e) =>
+                setBirthdayEvent({ ...birthdayEvent, notes: e.target.value })
+              }
+            />
+          </Form.Item>
+
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="login-form-button"
+            >
+              Create birthday event
+            </Button>
+          </Form.Item>
+        </Form>
+      </div>
+    </>
   );
 };
 

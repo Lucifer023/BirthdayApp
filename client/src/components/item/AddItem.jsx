@@ -30,66 +30,73 @@ const AddItemToWishList = () => {
   };
 
   return (
-    <div className="main-container">
-      <Form
-        onSubmitCapture={handleSubmit}
-        className="form-container-item"
-        initialValues={{
-          remember: true,
-        }}
-      >
-        <Form.Item
-        name="itemName"
-          rules={[
-            {
-              required: true,
-              message: "Please input name of item!",
-            },
-          ]}
+    <>
+      <h1 style={{ display: "flex", justifyContent: "center" }}>Create item</h1>
+      <div className="main-container">
+        <Form
+          onSubmitCapture={handleSubmit}
+          className="form-container-item"
+          initialValues={{
+            remember: true,
+          }}
         >
-          <Input
-            placeholder="name of item"
-            onChange={(e) => setItem({ ...item, name: e.target.value })}
-          />
-        </Form.Item>
+          <Form.Item
+            name="itemName"
+            rules={[
+              {
+                required: true,
+                message: "Please input name of item!",
+              },
+            ]}
+          >
+            <Input
+              placeholder="name of item"
+              onChange={(e) => setItem({ ...item, name: e.target.value })}
+            />
+          </Form.Item>
 
-        <Form.Item
-        name="itemPrice"
-          rules={[
-            {
-              required: true,
-              message: "Please input price for item!",
-            },
-          ]}
-        >
-          <InputNumber
-            placeholder="price"
-            onChange={(value) => setItem({ ...item, price: value })}
-          />
-        </Form.Item>
+          <Form.Item
+            name="itemPrice"
+            rules={[
+              {
+                required: true,
+                message: "Please input price for item!",
+              },
+            ]}
+          >
+            <InputNumber
+              placeholder="price"
+              onChange={(value) => setItem({ ...item, price: value })}
+            />
+          </Form.Item>
 
-        <Form.Item
-        name="imageUrl"
-          rules={[
-            {
-              required: true,
-              message: "Please input image url of item!",
-            },
-          ]}
-        >
-          <Input
-            placeholder="Image url of item"
-            onChange={(e) => setItem({ ...item, urlLink: e.target.value })}
-          />
-        </Form.Item>
+          <Form.Item
+            name="imageUrl"
+            rules={[
+              {
+                required: true,
+                message: "Please input image url of item!",
+              },
+            ]}
+          >
+            <Input
+              placeholder="Image url of item"
+              onChange={(e) => setItem({ ...item, urlLink: e.target.value })}
+            />
+          </Form.Item>
 
-        <Form.Item>
-          <Button type="primary" htmlType="submit" className="login-form-button">
-            Add item
-          </Button>
-        </Form.Item>
-      </Form>
-    </div>
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="login-form-button"
+            >
+              Add item
+            </Button>
+          </Form.Item>
+        </Form>
+      </div>
+    </>
   );
 };
 

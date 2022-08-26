@@ -8,6 +8,7 @@ import WishListOfLoggedUser from "../components/item/WishListOfLoggedUser";
 import AllAndOpenBirthdayEvents from "../components/birthdayEvent/AllAndOpenBirthdayEvents";
 import AddParticipantToBirthdayEvent from "../components/birthdayEvent/AddParticipantToBirthdayEvent";
 import CreateBirthdayEvent from "../components/birthdayEvent/CreateBirthdayEvent";
+import BuyPresent from "../components/present/BuyPresent";
 
 export const LoggedInUserRoutes = () => {
   return (
@@ -65,6 +66,14 @@ export const LoggedInUserRoutes = () => {
         element={
           <LoggedInLayout>
             <AddParticipantToBirthdayEvent />
+          </LoggedInLayout>
+        }
+      />
+      <Route
+        path="/buyPresent/:id"
+        element={
+          <LoggedInLayout>
+            <BuyPresent />
           </LoggedInLayout>
         }
       />
