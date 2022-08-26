@@ -1,7 +1,10 @@
 import React, { useContext } from "react";
 import { Menu } from "antd";
 import { Link } from "react-router-dom";
-import { AppstoreOutlined, SettingOutlined } from "@ant-design/icons";
+import {
+  LogoutOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 import { Context } from "../../utils/LoginProvider";
 import { serviceConfig } from "../../appSettings/serviceConfig";
 import { optionsErrorToast } from "../../helper/toastOptions";
@@ -23,49 +26,94 @@ const Navbar = () => {
         toast.error(err.response.data.message, optionsErrorToast);
       });
   };
-  return (
-    <Menu mode="horizontal">
-      <Menu.SubMenu key="birthdaySubmenu" title="Birthday - Submenu">
-        <Menu.Item key="/createBirthdayEvent">
-          <span>Create birthday event</span>
-          <Link to="/createBirthdayEvent" />
-        </Menu.Item>
 
-        <Menu.Item key="/upcomingBirthdays">
-          <span>Upcoming birthdays</span>
-          <Link to="/upcomingBirthdays" />
-        </Menu.Item>
+  const menuItems = [
+    {
+      label: "Birthday - Submenu",
+      key: "birthdaySubmenu",
+      children: [
+        {
+          label: (
+            <>
+              <span>Create birthday event</span>
+              <Link to="/createBirthdayEvent" />
+            </>
+          ),
+          key: "/createBirthdayEvent",
+        },
+        {
+          label: (
+            <>
+              <span>Upcoming birthdays</span>
+              <Link to="/upcomingBirthdays" />
+            </>
+          ),
+          key: "/upcomingBirthdays",
+        },
+        {
+          label: (
+            <>
+              <span>All and open birthday events</span>
+              <Link to="/allAndOpenBirthdayEvents" />
+            </>
+          ),
+          key: "/allAndOpenBirthdayEvents",
+        },
+      ],
+    },
+    {
+      label: "Item - Submenu",
+      key: "itemSubmenu",
+      children: [
+        {
+          label: (
+            <>
+              <span>All items</span>
+              <Link to="/allItems" />
+            </>
+          ),
+          key: "/allItems",
+        },
+        {
+          label: (
+            <>
+              <span>Add item</span>
+              <Link to="/addItem" />
+            </>
+          ),
+          key: "/addItem",
+        },
+        {
+          label: (
+            <>
+              <span>My wish list</span>
+              <Link to="/myWishList" />
+            </>
+          ),
+          key: "/myWishList",
+        },
+      ],
+    },
+    {
+      label: "User - Submenu",
+      key: "userSubmenu",
+      icon: <UserOutlined />,
+      children: [
+        {
+          label: (
+            <>
+              <span onClick={signOut}>Sign out</span>
+            </>
+          ),
+          key: "/signOut",
+          icon: <LogoutOutlined />,
+          danger: true
+        },
+      ],
+    },
+  ];
 
-        <Menu.Item key="/allAndOpenBirthdayEvents">
-          <span>All and open birthday events</span>
-          <Link to="/allAndOpenBirthdayEvents" />
-        </Menu.Item>
-      </Menu.SubMenu>
-
-      <Menu.SubMenu key="itemSubmenu" title="Items - Submenu">
-        <Menu.Item key="/allItems">
-          <span>All items</span>
-          <Link to="/allItems" />
-        </Menu.Item>
-
-        <Menu.Item key="/addItem">
-          <span>Add item</span>
-          <Link to="/addItem" />
-        </Menu.Item>
-
-        <Menu.Item key="/myWishList">
-          <span>My wish list</span>
-          <Link to="/myWishList" />
-        </Menu.Item>
-      </Menu.SubMenu>
-
-      <Menu.SubMenu key="userSubmenu" title="User" icon={<SettingOutlined />}>
-        <Menu.Item key="signOut" icon={<AppstoreOutlined />} onClick={signOut}>
-          SignOut
-        </Menu.Item>
-      </Menu.SubMenu>
-    </Menu>
-  );
+  return <Menu mode="horizontal" items={menuItems} style={{ display: "flex", justifyContent: 'center' }}></Menu>;
 };
 
 export default Navbar;

@@ -85,7 +85,11 @@ const AllAndOpenBirthdayEvents = () => {
             }
           }
         });
-        return <p key={index}>{participantNames.join(", ")}</p>;
+        if(participantNames.length !== 0) {
+          return <p key={index}>{participantNames.join(", ")}</p>;
+        } else {
+          return <p key={index}>/</p>;
+        }
       },
     },
     {

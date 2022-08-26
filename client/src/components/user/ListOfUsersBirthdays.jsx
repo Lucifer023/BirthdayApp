@@ -65,7 +65,11 @@ function ListOfUsersBirthdays() {
             }
           }
         });
-        return <p key={index._id}>{itemNames.join(", ")}</p>;
+        if(itemNames.length === 0) {
+          return <p key={index._id}>/</p>;
+        } else {
+          return <p key={index._id}>{itemNames.join(", ")}</p>;
+        }
       },
     },
   ];

@@ -53,7 +53,7 @@ const WishListOfLoggedUser = () => {
       {itemNames.map((item, index) => {
         return (
           <p key={index} style={{ display: "flex", justifyContent: "center" }}>
-            {item}
+            {index + 1 + "."} {item}
           </p>
         );
       })}
