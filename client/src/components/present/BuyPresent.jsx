@@ -51,7 +51,7 @@ const BuyPresent = () => {
   };
   return (
     <>
-      <h1 style={{ display: "flex", justifyContent: "center" }}>Buy present</h1>
+      <h1>Buy present</h1>
       <div className="form-container">
         <Form onSubmitCapture={handleSubmit} className="login-form">
           <Form.Item
@@ -69,12 +69,12 @@ const BuyPresent = () => {
               onChange={(value) =>
                 setPresent({ ...present, presentBought: value })
               }
-              style={{ width: "150%" }}
+              className="select-item"
             >
               {allItems.map((item) => {
                 return (
                   <Select.Option key={item._id} value={item._id}>
-                    {item.name} {item.price} {"din"}
+                    {item.name} {"-"} {item.price} {"din"}
                   </Select.Option>
                 );
               })}

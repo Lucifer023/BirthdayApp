@@ -1,10 +1,7 @@
 import React, { useContext } from "react";
 import { Menu } from "antd";
 import { Link } from "react-router-dom";
-import {
-  LogoutOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
+import { LogoutOutlined, UserOutlined } from "@ant-design/icons";
 import { Context } from "../../utils/LoginProvider";
 import { serviceConfig } from "../../appSettings/serviceConfig";
 import { optionsErrorToast } from "../../helper/toastOptions";
@@ -107,13 +104,15 @@ const Navbar = () => {
           ),
           key: "/signOut",
           icon: <LogoutOutlined />,
-          danger: true
+          danger: true,
         },
       ],
     },
   ];
 
-  return <Menu mode="horizontal" items={menuItems} style={{ display: "flex", justifyContent: 'center' }}></Menu>;
+  return (
+    <Menu mode="horizontal" items={menuItems} className="navbar-menu"></Menu>
+  );
 };
 
 export default Navbar;

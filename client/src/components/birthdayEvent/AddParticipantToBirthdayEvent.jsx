@@ -29,7 +29,7 @@ const AddParticipantToBirthdayEvent = () => {
       )
       .then((res) => {
         toast.success("Succesfully added as participant");
-        routeChange()
+        routeChange();
       })
       .catch((err) => {
         toast.error(err.response.data.message, optionsErrorToast);

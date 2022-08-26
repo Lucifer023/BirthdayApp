@@ -43,11 +43,13 @@ function ListOfUsersBirthdays() {
       title: "Name",
       dataIndex: "name",
       key: "name",
+      align: "center",
     },
     {
       title: "Birth date",
       dataIndex: "birthDate",
       key: "birthDate",
+      align: "center",
       render: (birthDate, index) => {
         return <p key={index._id}>{moment(birthDate).format("DD.MM.YYYY")}</p>;
       },
@@ -56,6 +58,7 @@ function ListOfUsersBirthdays() {
       title: "Wish list",
       dataIndex: "wishlist",
       key: "wishlist",
+      align: "center",
       render: (wishlist, index) => {
         let itemNames = [];
         allItems.map((item) => {
@@ -65,11 +68,7 @@ function ListOfUsersBirthdays() {
             }
           }
         });
-        if(itemNames.length === 0) {
-          return <p key={index._id}>/</p>;
-        } else {
-          return <p key={index._id}>{itemNames.join(", ")}</p>;
-        }
+        return <p key={index._id}>{itemNames.join(", ")}</p>;
       },
     },
   ];

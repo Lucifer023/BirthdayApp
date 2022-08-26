@@ -31,7 +31,7 @@ const AddItemToWishList = () => {
 
   return (
     <>
-      <h1 style={{ display: "flex", justifyContent: "center" }}>Create item</h1>
+      <h1>Create item</h1>
       <div className="main-container">
         <Form
           onSubmitCapture={handleSubmit}

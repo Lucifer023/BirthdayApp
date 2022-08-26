@@ -62,6 +62,7 @@ const AllAndOpenBirthdayEvents = () => {
       title: "Birthday person",
       dataIndex: "birthdayPerson",
       key: "birthdayPerson",
+      align: "center",
       render: (birthdaPerson, index) => {
         let birthdaPersonName;
         allUsers.map((user) => {
@@ -76,6 +77,7 @@ const AllAndOpenBirthdayEvents = () => {
       title: "Participants",
       dataIndex: "participants",
       key: "participants",
+      align: "center",
       render: (participant, index) => {
         let participantNames = [];
         allUsers.map((user) => {
@@ -85,10 +87,14 @@ const AllAndOpenBirthdayEvents = () => {
             }
           }
         });
-        if(participantNames.length !== 0) {
+        if (participantNames.length !== 0) {
           return <p key={index}>{participantNames.join(", ")}</p>;
         } else {
-          return <p key={index}>/</p>;
+          return (
+            <p key={index} className="no-participant">
+              No participants
+            </p>
+          );
         }
       },
     },
@@ -96,6 +102,7 @@ const AllAndOpenBirthdayEvents = () => {
       title: "Event creator",
       dataIndex: "eventCreator",
       key: "eventCreator",
+      align: "center",
       render: (eventCreator, index) => {
         let eventCreatorName;
         allUsers.map((user) => {
@@ -110,16 +117,19 @@ const AllAndOpenBirthdayEvents = () => {
       title: "Total money amount",
       dataIndex: "totalMoneyAmount",
       key: "totalMoneyAmount",
+      align: "center",
     },
     {
       title: "Total collected amount",
       dataIndex: "totalCollectedAmount",
       key: "totalCollectedAmount",
+      align: "center",
     },
     {
       title: "Event date",
       dataIndex: "eventDate",
       key: "eventDate",
+      align: "center",
       render: (eventDate, index) => {
         return <p key={index._id}>{moment(eventDate).format("DD.MM.YYYY")}</p>;
       },
@@ -132,10 +142,16 @@ const AllAndOpenBirthdayEvents = () => {
       title: "Add yourself as participant",
       dataIndex: "",
       key: "x",
+      align: "center",
       render: (data) => {
         return (
           <Button type="primary">
-            <Link state={data._id} to={{ pathname: `/addParticipantToBirthdayEvent/${data._id}` }} >Add</Link>
+            <Link
+              state={data._id}
+              to={{ pathname: `/addParticipantToBirthdayEvent/${data._id}` }}
+            >
+              Add
+            </Link>
           </Button>
         );
       },
@@ -144,10 +160,13 @@ const AllAndOpenBirthdayEvents = () => {
       title: "Buy present",
       dataIndex: "",
       key: "x",
+      align: "center",
       render: (data) => {
         return (
           <Button type="primary">
-            <Link state={data._id} to={{ pathname: `/buyPresent/${data._id}` }} >Add</Link>
+            <Link state={data._id} to={{ pathname: `/buyPresent/${data._id}` }}>
+              Add
+            </Link>
           </Button>
         );
       },

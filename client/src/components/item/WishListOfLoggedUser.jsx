@@ -39,9 +39,7 @@ const WishListOfLoggedUser = () => {
 
   return (
     <div>
-      <h1 style={{ display: "flex", justifyContent: "center" }}>
-        My wish list
-      </h1>
+      <h1>My wish list</h1>
       {allItems.map((item, index) => {
         for (let i = 0; i < userWishList.length; i++) {
           if (item._id === userWishList[i]) {
@@ -52,7 +50,7 @@ const WishListOfLoggedUser = () => {
 
       {itemNames.map((item, index) => {
         return (
-          <p key={index} style={{ display: "flex", justifyContent: "center" }}>
+          <p key={index} className="display-item">
             {index + 1 + "."} {item}
           </p>
         );

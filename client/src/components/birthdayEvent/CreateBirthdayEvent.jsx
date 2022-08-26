@@ -53,7 +53,11 @@ const CreateBirthdayEvent = () => {
     await axios
       .get(`${serviceConfig.baseURL}/users/allUsers`)
       .then((res) => {
-        setAllUsers(res.data);
+        const allUsersFromDB = res.data;
+        const arrayOfUsersWithoutLoggedOne = allUsersFromDB.filter(
+          (user) => user.name !== loggedUser.name
+        );
+        setAllUsers(arrayOfUsersWithoutLoggedOne);
       })
       .catch((err) => {
         toast.error(err.response.data.message, optionsErrorToast);
@@ -79,7 +83,7 @@ const CreateBirthdayEvent = () => {
 
   return (
     <>
-      <h1 style={{ display: "flex", justifyContent: "center" }}>Create birthday event</h1>
+      <h1>Create birthday event</h1>
       <div className="main-container">
         <Form
           onSubmitCapture={handleSubmit}
@@ -103,9 +107,7 @@ const CreateBirthdayEvent = () => {
               onChange={(value) =>
                 setBirthdayEvent({ ...birthdayEvent, birthdayPerson: value })
               }
-              style={{
-                width: "100%",
-              }}
+              className="select-person"
             >
               {allUsers.map((user) => {
                 return (
@@ -128,7 +130,7 @@ const CreateBirthdayEvent = () => {
           >
             <InputNumber
               placeholder="Total money amount"
-              style={{ width: "180px" }}
+              className="totalMoneyAmount-field"
               onChange={(value) =>
                 setBirthdayEvent({ ...birthdayEvent, totalMoneyAmount: value })
               }

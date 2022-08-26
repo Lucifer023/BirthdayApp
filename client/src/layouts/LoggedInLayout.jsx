@@ -1,13 +1,13 @@
-import React from 'react'
-import Navbar from '../components/navbar/Navbar'
+import React from "react";
+import Navbar from "../components/navbar/Navbar";
 
-const LoggedInLayout = ({children}) => {
+const LoggedInLayout = ({ children }) => {
   return (
     <div>
-        <Navbar />
-        {children}
+      <Navbar />
+      {children}
     </div>
-  )
-}
+  );
+};
 
-export default LoggedInLayout
+export default LoggedInLayout;

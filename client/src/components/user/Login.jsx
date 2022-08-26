@@ -165,9 +165,7 @@ function Login() {
                 onChange={(value) =>
                   setRegisterUser({ ...registerUser, wishlist: value })
                 }
-                style={{
-                  width: "100%",
-                }}
+                className="select-item"
               >
                 {allItems.map((item) => {
                   return (
@@ -195,7 +193,5 @@ function Login() {
     </>
   );
 }
-
-// KAKO PRISTUPITI DATUMU I SACUVATI GA U POLJE
 
 export default Login;

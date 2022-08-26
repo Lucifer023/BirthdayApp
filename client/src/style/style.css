@@ -1,9 +1,23 @@
+  /* General */
+
+  h1 {
+    display: flex;
+    justify-content: center;
+  }
+
+  /* General End */
+
   /* Navbar */
 
- 
+  .navbar-menu {
+    display: flex;
+    justify-content: center;
+  }
+
   /* Navbar End */
 
-  /* Register Form */
+
+ /* Form */
 
   .main-container {
     width: 100%;
@@ -18,6 +32,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    border: 2px solid black;
   }
   
   .login-form {
@@ -37,7 +52,15 @@
   }
 
 
-  /* Register Form End */
+  /* Form End */
+
+  /* Login */
+
+  .select-item {
+    width: 100%;
+  }
+
+  /* Login End */
 
   /* ShowAllItems Component */
 
@@ -60,3 +83,40 @@
   }
 
   /* AddItem Component End */
+
+  /* AllAndOpenBirthdayEvents */
+
+  .no-participant {
+    color: red;
+  }
+
+  /* AllAndOpenBirthdayEvents End */
+
+  /* CreateBirthdayEvent */
+
+  .select-person {
+    width: 100%;
+  }
+
+  .totalMoneyAmount-field {
+    width: 180px !important;
+  }
+
+  /* CreateBirthdayEvent End */
+
+  /* WishListOfLoggedUser */
+
+  .display-item {
+    display: flex;
+    justify-content: center;
+  }
+
+  /* WishListOfLoggedUser End */
+
+  /* BuyPresent */
+
+  .select-item {
+    width: 150% !important;
+  }
+
+  /* BuyPresent End */

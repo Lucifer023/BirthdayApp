@@ -5,17 +5,17 @@ import LoginLayout from "../layouts/LoginLayout";
 
 const LoginRoutes = () => {
   return (
-      <Routes>
-        <Route
-          path="/login"
-          element={
-            <LoginLayout>
-              <Login />
-            </LoginLayout>
-          }
-        />
-        <Route path="/*" element={<Navigate replace to='/login' />} />
-      </Routes>
+    <Routes>
+      <Route
+        path="/login"
+        element={
+          <LoginLayout>
+            <Login />
+          </LoginLayout>
+        }
+      />
+      <Route path="/*" element={<Navigate replace to="/login" />} />
+    </Routes>
   );
 };
 

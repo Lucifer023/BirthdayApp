@@ -40,11 +40,13 @@ const ShowAllItems = () => {
       title: "Name",
       dataIndex: "name",
       key: "name",
+      align: "center",
     },
     {
       title: "Price",
       dataIndex: "price",
       key: "price",
+      align: "center",
       render: (price) => {
         return <p>{price} din</p>;
       },
@@ -53,6 +55,7 @@ const ShowAllItems = () => {
       title: "Image",
       dataIndex: "urlLink",
       key: "urlLink",
+      align: "center",
       render: (urlLink) => {
         return <img className="itemImageUrl" src={urlLink} alt="imageOfItem" />;
       },
@@ -61,6 +64,7 @@ const ShowAllItems = () => {
       title: "Add item to your wish list",
       dataIndex: "",
       key: "x",
+      align: "center",
       render: (data) => {
         return (
           <Button type="primary" onClick={() => addItemToWishList(data._id)}>
@@ -73,6 +77,7 @@ const ShowAllItems = () => {
       title: "Delete item",
       dataIndex: "",
       key: "x",
+      align: "center",
       render: (data) => {
         return (
           <Button type="danger" onClick={() => deleteItem(data._id)}>
