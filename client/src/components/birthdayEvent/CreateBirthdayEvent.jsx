@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 const CreateBirthdayEvent = () => {
   let navigate = useNavigate();
   const [loggedUser, setLoggedUser] = useState({});
-  const [allUsers, setAllUsers] = useState([]);
+  const [usersWithUpcomingBirthdays, setUsersWithUpcomingBirthdays] = useState([]);
   const [birthdayEvent, setBirthdayEvent] = useState({
     birthdayPerson: "",
     totalMoneyAmount: "",
@@ -24,7 +24,7 @@ const CreateBirthdayEvent = () => {
 
   useEffect(() => {
     getLoggedInUser();
-    getAllUsers();
+    getAllUpcomingBirthdays();
   }, []);
 
   const handleSubmit = (e) => {
@@ -49,15 +49,11 @@ const CreateBirthdayEvent = () => {
       });
   };
 
-  const getAllUsers = async () => {
+  const getAllUpcomingBirthdays = async () => {
     await axios
-      .get(`${serviceConfig.baseURL}/users/allUsers`)
+      .get(`${serviceConfig.baseURL}/users/upcomingBirthdays`)
       .then((res) => {
-        const allUsersFromDB = res.data;
-        const arrayOfUsersWithoutLoggedOne = allUsersFromDB.filter(
-          (user) => user.name !== loggedUser.name
-        );
-        setAllUsers(arrayOfUsersWithoutLoggedOne);
+        setUsersWithUpcomingBirthdays(res.data);
       })
       .catch((err) => {
         toast.error(err.response.data.message, optionsErrorToast);
@@ -109,7 +105,7 @@ const CreateBirthdayEvent = () => {
               }
               className="select-person"
             >
-              {allUsers.map((user) => {
+              {usersWithUpcomingBirthdays.map((user) => {
                 return (
                   <Select.Option key={user._id} value={user._id}>
                     {user.name}

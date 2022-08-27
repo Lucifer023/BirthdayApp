@@ -55,9 +55,9 @@
 
   /* Login */
 
-  .select-item {
-    width: 100%;
-  }
+  /* .select-item {
+    width: 100% !important;
+  } */
 
   /* Login End */
 
@@ -93,9 +93,9 @@
 
   /* CreateBirthdayEvent */
 
-  .select-person {
+  /* .select-person {
     width: 100%;
-  }
+  } */
 
   .totalMoneyAmount-field {
     width: 180px !important;
@@ -114,8 +114,8 @@
 
   /* BuyPresent */
 
-  .select-item {
-    width: 150% !important;
-  }
+  /* .select-item-present {
+    width: 200% !important;
+  } */
 
   /* BuyPresent End */

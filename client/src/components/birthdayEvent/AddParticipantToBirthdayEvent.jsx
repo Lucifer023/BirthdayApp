@@ -42,51 +42,54 @@ const AddParticipantToBirthdayEvent = () => {
   };
 
   return (
-    <div className="main-container">
-      <Form
-        onSubmitCapture={handleSubmit}
-        className="form-container-item"
-        initialValues={{
-          remember: true,
-        }}
-      >
-        <Form.Item
-          name="amount"
-          rules={[
-            {
-              required: true,
-              message: "Please input amount!",
-            },
-          ]}
+    <>
+      <h1>Add yourself as participant</h1>
+      <div className="main-container">
+        <Form
+          onSubmitCapture={handleSubmit}
+          className="form-container-item"
+          initialValues={{
+            remember: true,
+          }}
         >
-          <InputNumber
-            placeholder="Amount"
-            onChange={(value) =>
-              setUserPayment({ ...userPayment, amount: value })
-            }
-          />
-        </Form.Item>
-
-        <Form.Item name="message">
-          <Input
-            placeholder="Birthday message"
-            onChange={(e) =>
-              setUserPayment({ ...userPayment, message: e.target.value })
-            }
-          />
-        </Form.Item>
-
-        <Form.Item>
-          <Button
-            type="primary"
-            htmlType="submit"
-            className="login-form-button"
+          <Form.Item
+            name="amount"
+            rules={[
+              {
+                required: true,
+                message: "Please input amount!",
+              },
+            ]}
           >
-            Add yourself as participant
-          </Button>
-        </Form.Item>
-      </Form>
-    </div>
+            <InputNumber
+              placeholder="Amount"
+              onChange={(value) =>
+                setUserPayment({ ...userPayment, amount: value })
+              }
+            />
+          </Form.Item>
+
+          <Form.Item name="message">
+            <Input
+              placeholder="Birthday message"
+              onChange={(e) =>
+                setUserPayment({ ...userPayment, message: e.target.value })
+              }
+            />
+          </Form.Item>
+
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="login-form-button"
+            >
+              Add yourself as participant
+            </Button>
+          </Form.Item>
+        </Form>
+      </div>
+    </>
   );
 };
 

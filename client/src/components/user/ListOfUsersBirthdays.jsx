@@ -54,23 +54,6 @@ function ListOfUsersBirthdays() {
         return <p key={index._id}>{moment(birthDate).format("DD.MM.YYYY")}</p>;
       },
     },
-    {
-      title: "Wish list",
-      dataIndex: "wishlist",
-      key: "wishlist",
-      align: "center",
-      render: (wishlist, index) => {
-        let itemNames = [];
-        allItems.map((item) => {
-          for (let i = 0; i < wishlist.length; i++) {
-            if (item._id === wishlist[i]) {
-              itemNames.push(item.name);
-            }
-          }
-        });
-        return <p key={index._id}>{itemNames.join(", ")}</p>;
-      },
-    },
   ];
 
   return (
@@ -80,6 +63,24 @@ function ListOfUsersBirthdays() {
           <Title level={3}>Upcoming birthdays</Title>
           <Table
             columns={columns}
+            expandable={{
+              expandedRowRender: (record, index) => {
+                let itemNames = [];
+                allItems.map((item) => {
+                  for (let i = 0; i < record.wishlist.length; i++) {
+                    if (item._id === record.wishlist[i]) {
+                      itemNames.push(item.name);
+                    }
+                  }
+                });
+                return (
+                  <>
+                    <p>Wish list: </p>
+                    <p key={index._id}>{itemNames.join(", ")}</p>
+                  </>
+                );
+              },
+            }}
             dataSource={usersWithUpcomingBirthdays}
             rowKey={(data) => data._id}
           ></Table>

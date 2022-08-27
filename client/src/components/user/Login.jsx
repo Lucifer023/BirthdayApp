@@ -22,6 +22,12 @@ function Login() {
   const [login, setLogin] = useContext(Context);
   const [isSignIn, setIsSignIn] = useState(true);
 
+  const initalRegisterState = {
+    name: "",
+    birthDate: "",
+    wishlist: [],
+  };
+
   useEffect(() => {
     getAllItems();
   }, []);
@@ -34,7 +40,6 @@ function Login() {
 
   const handleSubmitRegister = (event) => {
     event.preventDefault();
-
     register();
   };
 
@@ -58,6 +63,8 @@ function Login() {
         setIsSignIn(!isSignIn);
         toast.success("Successfully registered!");
         toast.info("You need to login now!");
+        setRegisterUser(initalRegisterState);
+        document.getElementById("register-user-form").reset();
       })
       .catch((err) => {
         toast.error(err.response.data.message, optionsErrorToast);
@@ -114,6 +121,7 @@ function Login() {
       ) : (
         <div className="form-container">
           <Form
+            id="register-user-form"
             onSubmitCapture={handleSubmitRegister}
             className="login-form"
             initialValues={{

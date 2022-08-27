@@ -4,8 +4,10 @@ import { toast } from "react-toastify";
 import { serviceConfig } from "../../appSettings/serviceConfig";
 import { Form, Input, Button, InputNumber } from "antd";
 import { optionsErrorToast } from "../../helper/toastOptions";
+import { useNavigate } from "react-router-dom";
 
 const AddItemToWishList = () => {
+  let navigate = useNavigate();
   const [item, setItem] = useState({
     name: "",
     price: 0,
@@ -23,15 +25,25 @@ const AddItemToWishList = () => {
       .post(`${serviceConfig.baseURL}/items`, item)
       .then((res) => {
         toast.success("Successfully added item!");
+        routeChange()
       })
       .catch((err) => {
         toast.error(err.response.data.message, optionsErrorToast);
       });
   };
 
+  const routeChange = () => {
+    let path = `/allItems`;
+    navigate(path);
+  };
+
+  const isImage = (url) => {
+    return /^https?:\/\/.+\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url);
+  };
+
   return (
     <>
-      <h1>Create item</h1>
+      <h1>Add item</h1>
       <div className="main-container">
         <Form
           onSubmitCapture={handleSubmit}
@@ -51,7 +63,12 @@ const AddItemToWishList = () => {
           >
             <Input
               placeholder="name of item"
-              onChange={(e) => setItem({ ...item, name: e.target.value })}
+              onChange={(e) =>
+                setItem({
+                  ...item,
+                  name: e.target.value.replace(/[^a-z]/gi, ""),
+                })
+              }
             />
           </Form.Item>
 
@@ -81,7 +98,11 @@ const AddItemToWishList = () => {
           >
             <Input
               placeholder="Image url of item"
-              onChange={(e) => setItem({ ...item, urlLink: e.target.value })}
+              onChange={(e) => {
+                if (isImage(e.target.value)) {
+                  setItem({ ...item, urlLink: e.target.value });
+                }
+              }}
             />
           </Form.Item>
 

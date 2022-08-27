@@ -69,7 +69,7 @@ const BuyPresent = () => {
               onChange={(value) =>
                 setPresent({ ...present, presentBought: value })
               }
-              className="select-item"
+              className="select-item-present"
             >
               {allItems.map((item) => {
                 return (
