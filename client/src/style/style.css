@@ -108,6 +108,7 @@
   .display-item {
     display: flex;
     justify-content: center;
+    align-items: center;
   }
 
   /* WishListOfLoggedUser End */

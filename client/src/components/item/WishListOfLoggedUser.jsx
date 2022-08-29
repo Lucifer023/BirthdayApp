@@ -3,11 +3,13 @@ import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { serviceConfig } from "../../appSettings/serviceConfig";
 import { optionsErrorToast } from "../../helper/toastOptions";
+import { Table, Card, Typography } from "antd";
 
 const WishListOfLoggedUser = () => {
   const [allItems, setAllItems] = useState([]);
   const [userWishList, setUserWishList] = useState([]);
-  let itemNames = [];
+  const { Title } = Typography;
+  let loggedUserWishList = [];
 
   useEffect(() => {
     getLoggedInUser();
@@ -37,25 +39,45 @@ const WishListOfLoggedUser = () => {
       });
   };
 
+  const columns = [
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+      align: "center",
+    },
+    {
+      title: "Image",
+      dataIndex: "urlLink",
+      key: "urlLink",
+      align: "center",
+      render: (urlLink) => {
+        return <img className="itemImageUrl" src={urlLink} alt="imageOfItem" />;
+      },
+    },
+  ];
+
   return (
-    <div>
-      <h1>My wish list</h1>
-      {allItems.map((item, index) => {
+    <>
+      {allItems.filter((item) => {
         for (let i = 0; i < userWishList.length; i++) {
           if (item._id === userWishList[i]) {
-            itemNames.push(item.name);
+            loggedUserWishList.push(item);
           }
         }
       })}
-
-      {itemNames.map((item, index) => {
-        return (
-          <p key={index} className="display-item">
-            {index + 1 + "."} {item}
-          </p>
-        );
-      })}
-    </div>
+      
+      <React.Fragment>
+        <Card>
+          <Title level={3}>Your wish list</Title>
+          <Table
+            columns={columns}
+            dataSource={loggedUserWishList}
+            rowKey={(data) => data._id}
+          ></Table>
+        </Card>
+      </React.Fragment>
+    </>
   );
 };
 
