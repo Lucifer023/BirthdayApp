@@ -118,12 +118,18 @@ const AllAndOpenBirthdayEvents = () => {
       dataIndex: "totalMoneyAmount",
       key: "totalMoneyAmount",
       align: "center",
+      render: (totalMoneyAmount, index) => {
+        return <p key={index}>{totalMoneyAmount + " din."}</p>;
+      },
     },
     {
       title: "Total collected amount",
       dataIndex: "totalCollectedAmount",
       key: "totalCollectedAmount",
       align: "center",
+      render: (totalMoneyAmount, index) => {
+        return <p key={index}>{totalMoneyAmount + " din."}</p>;
+      },
     },
     {
       title: "Event date",
