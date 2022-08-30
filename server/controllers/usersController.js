@@ -162,6 +162,7 @@ exports.usersWithUpcomingBirthdays = (req, res) => {
   return res.status(200).json(sortedUsers)
 }
 
+// Get user by username
 exports.getUserByName = async (req, res) => {
   let user
   try {
@@ -172,6 +173,7 @@ exports.getUserByName = async (req, res) => {
   return res.status(200).json(user)
 }
 
+// Get all users
 exports.getAllUsersFromDB = async (req, res) => {
   let allUsers
   try {
@@ -182,6 +184,7 @@ exports.getAllUsersFromDB = async (req, res) => {
   return res.status(200).json(allUsers)
 }
 
+// Get all users middeware
 exports.getAllUsers = async (req, res, next) => {
     let allUsers
     try {

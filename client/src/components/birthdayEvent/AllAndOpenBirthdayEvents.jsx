@@ -12,12 +12,16 @@ const AllAndOpenBirthdayEvents = () => {
   const [openBirthdayEvents, setOpenBirthdayEvents] = useState([]);
   const [isAllBirthdayEvents, setIsAllBirthdayEvents] = useState(true);
   const [allUsers, setAllUsers] = useState([]);
+  const [allPresents, setAllPresents] = useState([]);
+  const [allItems, setAllItems] = useState([]);
   const { Title } = Typography;
 
   useEffect(() => {
     getAllBirthdayEvents();
     getOpenBirthdayEvents();
     getAllUsers();
+    getAllPresents();
+    getAllItems();
   }, []);
 
   const getAllBirthdayEvents = async () => {
@@ -53,6 +57,28 @@ const AllAndOpenBirthdayEvents = () => {
       });
   };
 
+  const getAllPresents = async () => {
+    await axios
+      .get(`${serviceConfig.baseURL}/presents/allPresents`)
+      .then((res) => {
+        setAllPresents(res.data);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message, optionsErrorToast);
+      });
+  };
+
+  const getAllItems = async () => {
+    await axios
+      .get(`${serviceConfig.baseURL}/items/getAllItems`)
+      .then((res) => {
+        setAllItems(res.data);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message, optionsErrorToast);
+      });
+  };
+
   const onChange = () => {
     setIsAllBirthdayEvents(!isAllBirthdayEvents);
   };
@@ -71,31 +97,6 @@ const AllAndOpenBirthdayEvents = () => {
           }
         });
         return <p key={index}>{birthdaPersonName}</p>;
-      },
-    },
-    {
-      title: "Participants",
-      dataIndex: "participants",
-      key: "participants",
-      align: "center",
-      render: (participant, index) => {
-        let participantNames = [];
-        allUsers.map((user) => {
-          for (let i = 0; i < participant.length; i++) {
-            if (user._id === participant[i]) {
-              participantNames.push(user.name);
-            }
-          }
-        });
-        if (participantNames.length !== 0) {
-          return <p key={index}>{participantNames.join(", ")}</p>;
-        } else {
-          return (
-            <p key={index} className="no-participant">
-              No participants
-            </p>
-          );
-        }
       },
     },
     {
@@ -140,10 +141,35 @@ const AllAndOpenBirthdayEvents = () => {
         return <p key={index._id}>{moment(eventDate).format("DD.MM.YYYY")}</p>;
       },
     },
+    {
+      title: "Present bought",
+      dataIndex: "_id",
+      key: "_id",
+      align: "center",
+      render: (_id) => {
+        let presentBought = []
+        allPresents.map((present) => {
+          if (present.birthdayEventId === _id) {
+            allItems.map((item) => {
+              if(present.presentBought === item._id)
+              presentBought.push(item.name)
+            })
+          }
+        });
+        if(presentBought.length > 0 ){
+          return <p>{presentBought}</p>
+        } else {
+          return <p className="no-participant" >Present still not bought</p>
+        }
+      },
+    },
   ];
 
+
+  const columnsWithoutPresent = columns.slice(0,5)
+
   const columnsForOpenBirthdayEvents = [
-    ...columns,
+    ...columnsWithoutPresent,
     {
       title: "Add yourself as participant",
       dataIndex: "",
@@ -193,6 +219,32 @@ const AllAndOpenBirthdayEvents = () => {
             columns={
               isAllBirthdayEvents ? columns : columnsForOpenBirthdayEvents
             }
+            expandable={{
+              expandedRowRender: (record, index) => {
+                let participantNames = [];
+                allUsers.map((user) => {
+                  for (let i = 0; i < record.participants.length; i++) {
+                    if (user._id === record.participants[i]) {
+                      participantNames.push(user.name);
+                    }
+                  }
+                });
+                if (participantNames.length !== 0) {
+                  return (
+                    <>
+                      <p>Participants: </p>
+                      <p key={index}>{participantNames.join(", ")}</p>
+                    </>
+                  );
+                } else {
+                  return (
+                    <p key={index} className="no-participant">
+                      No participants
+                    </p>
+                  );
+                }
+              },
+            }}
             dataSource={
               isAllBirthdayEvents ? allBirthdayEvents : openBirthdayEvents
             }

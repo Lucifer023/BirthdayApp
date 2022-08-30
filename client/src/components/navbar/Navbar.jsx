@@ -7,9 +7,11 @@ import { serviceConfig } from "../../appSettings/serviceConfig";
 import { optionsErrorToast } from "../../helper/toastOptions";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { useState } from "react";
 
 const Navbar = () => {
   const [login, setLogin] = useContext(Context);
+  const [user, setUser] = useState(localStorage.getItem("usernameOfLoggedUser"))
 
   const signOut = async () => {
     await axios
@@ -92,7 +94,7 @@ const Navbar = () => {
       ],
     },
     {
-      label: "User - Submenu",
+      label: <>{user}</>,
       key: "userSubmenu",
       icon: <UserOutlined />,
       children: [

@@ -93,6 +93,17 @@ exports.createPresent = async (req, res) => {
         const newPresent = await present.save()
         res.status(200).json({ "present": newPresent, "birthdayEvent": updatedBirthdayEventObj })
     } catch(err) {
-        res.status(400).json({ message: err.message })
+        res.status(500).json({ message: 'Something went wrong' })
     }
+}
+
+// Get all presents
+exports.getAllPresents = async (req, res) => {
+    let allPresents
+    try {
+        allPresents = await Present.find()
+    } catch (err) {
+        return res.status(500).json({ message: 'Something went wrong' })
+    }
+    return res.status(200).json(allPresents)
 }

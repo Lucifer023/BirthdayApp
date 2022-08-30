@@ -51,7 +51,7 @@ function ListOfUsersBirthdays() {
       key: "birthDate",
       align: "center",
       render: (birthDate, index) => {
-        return <p key={index._id}>{moment(birthDate).format("DD.MM.YYYY")}</p>;
+        return <p key={index._id}>{moment(birthDate).format("DD.MM.")}</p>;
       },
     },
   ];
