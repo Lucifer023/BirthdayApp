@@ -50,16 +50,12 @@
     border: 2px solid black;
   }
 
+  .btn-link {
+    padding-left: 0!important;
+  }
+
 
   /* Form End */
-
-  /* Login */
-
-  /* .select-item {
-    width: 100% !important;
-  } */
-
-  /* Login End */
 
   /* ShowAllItems Component */
 
@@ -93,10 +89,6 @@
 
   /* CreateBirthdayEvent */
 
-  /* .select-person {
-    width: 100%;
-  } */
-
   .totalMoneyAmount-field {
     width: 180px !important;
   }
@@ -112,11 +104,3 @@
   }
 
   /* WishListOfLoggedUser End */
-
-  /* BuyPresent */
-
-  /* .select-item-present {
-    width: 200% !important;
-  } */
-
-  /* BuyPresent End */

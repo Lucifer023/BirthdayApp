@@ -114,7 +114,9 @@ function Login() {
               >
                 Log in
               </Button>
-              Or <a onClick={() => setIsSignIn(!isSignIn)}>register now!</a>
+              <Button type="link" className="btn-link" onClick={() => setIsSignIn(!isSignIn)}>
+                Register now!
+              </Button>
             </Form.Item>
           </Form>
         </div>
@@ -173,7 +175,6 @@ function Login() {
                 onChange={(value) =>
                   setRegisterUser({ ...registerUser, wishlist: value })
                 }
-                className="select-item"
               >
                 {allItems.map((item) => {
                   return (
@@ -193,7 +194,9 @@ function Login() {
               >
                 Register
               </Button>
-              Or <a onClick={() => setIsSignIn(!isSignIn)}>login now!</a>
+              <Button type="link" className="btn-link" onClick={() => setIsSignIn(!isSignIn)}>
+                Login now!
+              </Button>
             </Form.Item>
           </Form>
         </div>

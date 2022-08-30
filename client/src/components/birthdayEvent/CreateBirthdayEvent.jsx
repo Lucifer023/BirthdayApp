@@ -103,7 +103,6 @@ const CreateBirthdayEvent = () => {
               onChange={(value) =>
                 setBirthdayEvent({ ...birthdayEvent, birthdayPerson: value })
               }
-              className="select-person"
             >
               {usersWithUpcomingBirthdays.map((user) => {
                 return (

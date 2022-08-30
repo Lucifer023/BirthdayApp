@@ -65,11 +65,10 @@ const BuyPresent = () => {
           >
             <Select
               allowClear
-              placeholder="Select one item"
+              placeholder="Select one item for present"
               onChange={(value) =>
                 setPresent({ ...present, presentBought: value })
               }
-              className="select-item-present"
             >
               {allItems.map((item) => {
                 return (
