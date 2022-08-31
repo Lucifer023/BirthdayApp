@@ -197,7 +197,7 @@ const AllAndOpenBirthdayEvents = () => {
         return (
           <Button type="primary">
             <Link state={data._id} to={{ pathname: `/buyPresent/${data._id}` }}>
-              Add
+              Buy
             </Link>
           </Button>
         );
