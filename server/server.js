@@ -5,9 +5,8 @@ const cors = require('cors');
 const app = express()
 const mongoose = require('mongoose')
 
-mongoose.connect(process.env.DATABASE_URL)
+mongoose.connect(process.env.DATABASE_URL).catch(err => console.error(err))
 const db = mongoose.connection
-db.on('error', (err) => res.status(500).json({ message: "Something went wrong" }))
 db.once('open', () => console.log('Connected to Database'))
 
 app.use(express.json())

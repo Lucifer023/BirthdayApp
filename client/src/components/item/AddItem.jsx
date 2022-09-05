@@ -25,7 +25,7 @@ const AddItemToWishList = () => {
       .post(`${serviceConfig.baseURL}/items`, item)
       .then((res) => {
         toast.success("Successfully added item!");
-        routeChange()
+        routeChange();
       })
       .catch((err) => {
         toast.error(err.response.data.message, optionsErrorToast);
@@ -66,7 +66,7 @@ const AddItemToWishList = () => {
               onChange={(e) =>
                 setItem({
                   ...item,
-                  name: e.target.value.replace(/[^a-z]/gi, ""),
+                  name: e.target.value,
                 })
               }
             />
